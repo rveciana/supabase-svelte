@@ -24,9 +24,6 @@
 
 		});
 
-
-
-
 	const displayLocationInfo = async  (position: GeolocationPosition) =>{
 		lng = position.coords.longitude;
 		lat = position.coords.latitude;
