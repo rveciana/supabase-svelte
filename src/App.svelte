@@ -31,7 +31,8 @@
 
 			const {data}= await supabase
 				.rpc('addtrackpoint', {track_name: trackName, lon: lng, lat:lat});
-			console.log(lng, lat, "-->", data);
+			data.length>0 && track.set(data[0].geom);
+			console.log("New position", lng, lat, "-->", data[0].geom);
 		}
 
 	}
@@ -43,7 +44,7 @@
 		});
 
 
-		const { data, error } = await supabase
+		const { data } = await supabase
 			.rpc('addtrackpoint', {track_name: trackName, lon: lng, lat:lat});
 
 		mode = "write";
