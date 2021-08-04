@@ -9,6 +9,7 @@ import css from 'rollup-plugin-css-only';
 import { config } from 'dotenv';
   import replace from '@rollup/plugin-replace';
   import json from '@rollup/plugin-json';
+  import postcss from 'rollup-plugin-postcss';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -42,6 +43,9 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+        postcss({
+            extract: true
+        }),
 		replace({
 		__api: JSON.stringify({
 			env: {
@@ -51,7 +55,7 @@ export default {
 		}),
 	}),
 	json(),
-		svelte({
+		svelte({emitCss: true,
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {
 				// enable run-time checks when not in production
