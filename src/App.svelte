@@ -5,7 +5,7 @@
 	import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 	import Map from './Map.svelte';
 	import { convertWkb } from './read-wkb';
-	import { track } from './store.js';
+	import { track, mapCenter } from './store.js';
 	
 	let lng = 0;
 	let lat = 0;
@@ -49,6 +49,7 @@
 
 		mode = "write";
 		console.log("Writes", data);
+		mapCenter.set([lng, lat]);
 		data.length>0 && track.set(data[0].geom);
 	}
 
@@ -60,6 +61,7 @@
 				.filter('name', 'eq', trackName);
 
 		data.length>0 && track.set(data[0].geom);
+		data.length>0 && mapCenter.set(data[0].geom.coordinates[0]);
 		mode = "read";
 		mySubscription = supabase
 			.from(`tracks:name=eq.${trackName}`)

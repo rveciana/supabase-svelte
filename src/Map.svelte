@@ -1,10 +1,18 @@
 
 	<script>
-    import {LeafletMap, TileLayer,Tooltip, Popup, Polyline} from 'svelte-leafletjs';
+    import {LeafletMap, TileLayer} from 'svelte-leafletjs';
 	import MapTrack from './MapTrack.svelte';
+    import { mapCenter } from './store.js';
+
+    let mapCenterValue;
+
+    const unsubscribe = mapCenter.subscribe(value => {
+        mapCenterValue = value;
+    });
+
     const mapOptions = {
-        center: [41.7684, 2.2539525],
-        zoom: 12,
+        center: [mapCenterValue[1], mapCenterValue[0]],
+        zoom: 15,
     };
 
 	const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
